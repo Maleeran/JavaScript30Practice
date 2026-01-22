@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>JS + CSS Clock</title>
+    <link rel="icon" href="https://fav.farm/🔥" />
+    <link href="./style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+    <script>
+      const secondHand = document.querySelector(".second-hand");
+      const minsHand = document.querySelector(".min-hand");
+      const hourHand = document.querySelector(".hour-hand");
+
+      function getDegrees() {
+        // 获取当前时间
+        const now = new Date();
+        const milliseconds = now.getMilliseconds();
+        const seconds = now.getSeconds();
+        const mins = now.getMinutes();
+        const hour = now.getHours();
+        // 计算角度
+        // 一秒钟--->6度
+        const secondsDegrees = seconds * 6 + (milliseconds / 1000) * 6;
+        // 一分钟--->6度
+        const minsDegrees = mins * 6 + (seconds / 60) * 6;
+        // 一小时--->30度
+        const hourDegrees = hour * 30 + (mins / 60) * 30;
+        // 将计算好的角度，赋值给对应的针
+        secondHand.style.transform = ` rotate(${secondsDegrees + 180}deg)`;
+        minsHand.style.transform = ` rotate(${minsDegrees + 180}deg)`;
+        hourHand.style.transform = ` rotate(${hourDegrees + 180}deg)`;
+      }
+      // setInterval(getDegrees, 1000);
+    </script>
+  </body>
+</html>
