@@ -15,7 +15,7 @@
       html {
         box-sizing: border-box;
         background: #ffc600;
-        font-family: "helvetica neue";
+        font-family: 'helvetica neue';
         font-size: 20px;
         font-weight: 200;
       }
@@ -31,16 +31,24 @@
       }
 
       .panels {
-        min-height: 100vh;
+        height: 100vh;
+        /* width: 100vw; */
         overflow: hidden;
+        display: flex;
+        /* align-items: stretch; */
       }
 
       .panel {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
         background: #6b0f9c;
         box-shadow: inset 0 0 0 5px rgba(255, 255, 255, 0.1);
         color: white;
         text-align: center;
         align-items: center;
+        justify-content: center;
+
         /* Safari transitionend event.propertyName === flex */
         /* Chrome + FF transitionend event.propertyName === flex-grow */
         transition:
@@ -53,31 +61,31 @@
       }
 
       .panel1 {
-        background-image: url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500);
+        background-image: url('https://img.win3000.com/m00/ad/7b/6362471cacf4eb5b06e0632718fbd2d9.jpg');
       }
       .panel2 {
-        background-image: url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500);
+        background-image: url('https://img.win3000.com/m00/04/0b/563903d01caa8f1b250afcc703762b42.jpg');
       }
       .panel3 {
-        background-image: url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d);
+        background-image: url('https://img.win3000.com/m00/34/3d/f353f91ea36f0aaa9346329d07b0da35.jpg');
       }
       .panel4 {
-        background-image: url(https://source.unsplash.com/ITjiVXcwVng/1500x1500);
+        background-image: url('https://img.win3000.com/m00/17/9e/77bdbee780000f9572ccf2e99dde332a.jpg');
       }
       .panel5 {
-        background-image: url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500);
+        background-image: url('https://img.win3000.com/m00/ec/ea/0b7dc97231f7718f9ae6cde0ee7b6bb1.jpg');
       }
 
       /* Flex Children */
       .panel > * {
         margin: 0;
         width: 100%;
-        transition: transform 0.5s;
+        transition: transform 0.5s 0.7s;
       }
 
       .panel p {
         text-transform: uppercase;
-        font-family: "Amatic SC", cursive;
+        font-family: 'Amatic SC', cursive;
         text-shadow:
           0 0 4px rgba(0, 0, 0, 0.72),
           0 0 14px rgba(0, 0, 0, 0.45);
@@ -88,8 +96,25 @@
         font-size: 4em;
       }
 
+      .panel p:nth-child(1) {
+        transform: translateY(-50vh);
+      }
+
+      .panel p:nth-child(3) {
+        transform: translateY(50vh);
+      }
+
       .panel.open {
+        flex: 8;
         font-size: 40px;
+        width: 100%;
+      }
+      .panel.open p:nth-child(1) {
+        transform: translateY(0);
+      }
+
+      .panel.open p:nth-child(3) {
+        transform: translateY(0);
       }
     </style>
 
@@ -121,6 +146,36 @@
       </div>
     </div>
 
-    <script></script>
+    <script>
+      // const panelEls = document.querySelectorAll(".panel");
+      // panelEls.forEach((panel) => {
+      //   panel.classList.remove("open");
+      //   panel.addEventListener("click", () => {
+      //     panel.classList.toggle("open");
+      //   });
+      // });
+
+      // Event Delegation + state tracking
+      const panelsEl = document.querySelector('.panels');
+
+      let currentOpenPanel = null; // state tracking
+
+      panelsEl.addEventListener('click', e => {
+        const panel = e.target.closest('.panel');
+
+        if (!panel) return;
+
+        if (panel === currentOpenPanel) {
+          panel.classList.remove('open');
+          currentOpenPanel = null;
+        } else {
+          if (currentOpenPanel) {
+            currentOpenPanel.classList.remove('open');
+          }
+          panel.classList.add('open');
+          currentOpenPanel = panel;
+        }
+      });
+    </script>
   </body>
 </html>
