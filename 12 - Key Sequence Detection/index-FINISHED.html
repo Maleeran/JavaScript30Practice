@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,20 +9,17 @@
   <body>
     <script>
       const pressed = [];
-      const secretCode = "wesbos";
+      const secretCode = 'maleeran';
 
-      window.addEventListener("keyup", (e) => {
-        console.log(e.key);
+      // 监听键盘按键送开事件
+      window.addEventListener('keyup', e => {
         pressed.push(e.key);
-        pressed.splice(
-          -secretCode.length - 1,
-          pressed.length - secretCode.length
-        );
-        if (pressed.join("").includes(secretCode)) {
-          console.log("DING DING!");
+
+        pressed.splice(0, pressed.length - secretCode.length);
+        console.log(pressed);
+        if (pressed.join('').includes(secretCode)) {
           cornify_add();
         }
-        console.log(pressed);
       });
     </script>
   </body>
