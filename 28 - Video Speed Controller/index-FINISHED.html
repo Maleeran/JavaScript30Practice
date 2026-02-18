@@ -1,39 +1,55 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Video Speed Scrubber</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="https://fav.farm/✅" />
-</head>
-<body>
-
-  <div class="wrapper">
-    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
-    <div class="speed">
-      <div class="speed-bar">1×</div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Video Speed Scrubber</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://fav.farm/✅" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <video
+        class="flex"
+        width="765"
+        height="430"
+        src="./652333414.mp4"
+        loop
+        controls
+      ></video>
+      <div class="speed">
+        <div class="speed-bar">1×</div>
+      </div>
     </div>
-  </div>
 
-<script>
-  const speed = document.querySelector('.speed');
-  const bar = speed.querySelector('.speed-bar');
-  const video = document.querySelector('.flex');
+    <script>
+      const speed = document.querySelector('.speed');
 
-  function handleMove(e) {
-      const y = e.pageY - this.offsetTop;
-      const percent = y / this.offsetHeight;
-      const min = 0.4;
-      const max = 4;
-      const height = Math.round(percent * 100) + '%';
-      const playbackRate = percent * (max - min) + min;
-      bar.style.height = height;
-      bar.textContent = playbackRate.toFixed(2) + '×';
-      video.playbackRate = playbackRate;
-    }
+      const speedBar = document.querySelector('.speed-bar');
 
-  speed.addEventListener('mousemove', handleMove);
+      const video = document.querySelector('.flex');
+      console.log(speed.offsetHeight);
+      console.log(speedBar.offsetHeight);
 
-</script>
-</body>
+      speed.addEventListener('mousemove', e => {
+        const y = e.pageY - speed.offsetTop;
+        console.log(speed.offsetTop);
+        const percent = y / speed.offsetHeight;
+
+        const min = 0.5;
+        const max = 4;
+
+        // 计算条形元素的高度百分比，用于视觉反馈
+        const height = `${Math.round(percent * 100)}%`;
+
+        const playSpeed = (percent * (max - min) + min).toFixed(2);
+
+        speedBar.style.height = height;
+        speedBar.textContent = `${playSpeed}×`;
+
+        // console.log(playSpeed);
+
+        video.playbackRate = playSpeed;
+      });
+    </script>
+  </body>
 </html>
